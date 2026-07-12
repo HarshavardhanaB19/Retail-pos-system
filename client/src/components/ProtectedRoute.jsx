@@ -7,7 +7,7 @@ function ProtectedRoute({ children }) {
   const [status, setStatus] = useState('checking'); // checking | authed | unauthed
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/auth/me', { withCredentials: true })
+    axios.get(import.meta.env.VITE_API_URL + '/api/auth/me', { withCredentials: true })
       .then(() => setStatus('authed'))
       .catch(() => setStatus('unauthed'));
   }, []);

@@ -8,7 +8,7 @@ function Layout({ children }) {
   const path = window.location.pathname;
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/auth/me', { withCredentials: true })
+    axios.get(import.meta.env.VITE_API_URL + '/api/auth/me', { withCredentials: true })
       .then(res => {
         setRole(res.data.user.role);
         setName(res.data.user.name || 'Staff Member');
@@ -18,7 +18,7 @@ function Layout({ children }) {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:5000/api/auth/logout', {}, { withCredentials: true });
+      await axios.post(import.meta.env.VITE_API_URL + '/api/auth/logout', {}, { withCredentials: true });
       window.location.href = '/login';
     } catch (err) {
       window.location.href = '/login';

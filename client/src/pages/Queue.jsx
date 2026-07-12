@@ -6,7 +6,7 @@ function Queue() {
   const [error, setError] = useState('');
 
   const loadQueue = () => {
-    axios.get('http://localhost:5000/api/self-order/queue', { withCredentials: true })
+    axios.get(import.meta.env.VITE_API_URL + '/api/self-order/queue', { withCredentials: true })
       .then(res => setOrders(res.data))
       .catch(() => setError('Could not load queue'));
   };
@@ -19,7 +19,7 @@ function Queue() {
 
   const confirmOrder = async (orderId) => {
     try {
-      await axios.post(`http://localhost:5000/api/self-order/queue/${orderId}/confirm`, {}, { withCredentials: true });
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/self-order/queue/${orderId}/confirm`, {}, { withCredentials: true });
       loadQueue();
     } catch (err) {
       alert(err.response?.data?.message || 'Failed to confirm');
@@ -28,7 +28,7 @@ function Queue() {
 
   const rejectOrder = async (orderId) => {
     try {
-      await axios.post(`http://localhost:5000/api/self-order/queue/${orderId}/reject`, {}, { withCredentials: true });
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/self-order/queue/${orderId}/reject`, {}, { withCredentials: true });
       loadQueue();
     } catch (err) {
       alert('Failed to reject');

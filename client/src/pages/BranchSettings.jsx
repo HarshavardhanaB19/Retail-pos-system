@@ -9,7 +9,7 @@ function BranchSettings() {
   const [message, setMessage] = useState('');
 
   const loadBranch = () => {
-    axios.get('http://localhost:5000/api/branches/me', { withCredentials: true })
+    axios.get(import.meta.env.VITE_API_URL + '/api/branches/me', { withCredentials: true })
       .then(res => {
         setBranch(res.data);
         setEnvironmentType(res.data.environmentType);
@@ -24,7 +24,7 @@ function BranchSettings() {
     e.preventDefault();
     try {
       await axios.put(
-        'http://localhost:5000/api/branches/me',
+        import.meta.env.VITE_API_URL + '/api/branches/me',
         { environmentType, envSurchargeRate: Number(envSurchargeRate) },
         { withCredentials: true }
       );

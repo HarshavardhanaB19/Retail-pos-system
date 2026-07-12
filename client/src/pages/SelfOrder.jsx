@@ -14,14 +14,14 @@ function SelfOrder() {
   const [locale, setLocale] = useState(navigator.language.split('-')[0]);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/self-order/session/${branchId}/${tableId}`)
+    axios.get(`${import.meta.env.VITE_API_URL}/api/self-order/session/${branchId}/${tableId}`)
       .then(res => setToken(res.data.token))
       .catch(() => setError('Could not start session'));
   }, [branchId, tableId]);
 
   useEffect(() => {
     if (!token) return;
-    axios.get('http://localhost:5000/api/self-order/menu', {
+    axios.get(import.meta.env.VITE_API_URL + '/api/self-order/menu', {
       headers: { 'x-session-token': token }
     })
       .then(res => setProducts(res.data))
@@ -31,7 +31,7 @@ function SelfOrder() {
   useEffect(() => {
     if (!orderId) return;
     const interval = setInterval(() => {
-      axios.get(`http://localhost:5000/api/self-order/order/${orderId}`, {
+      axios.get(`${import.meta.env.VITE_API_URL}/api/self-order/order/${orderId}`, {
         headers: { 'x-session-token': token }
       }).then(res => setOrderStatus(res.data.status));
     }, 2000);
@@ -40,7 +40,7 @@ function SelfOrder() {
 
   useEffect(() => {
     const fetchStatus = () => {
-      axios.get(`http://localhost:5000/api/self-order/branch-status/${branchId}`)
+      axios.get(`${import.meta.env.VITE_API_URL}/api/self-order/branch-status/${branchId}`)
         .then(res => setBranchStatus(res.data))
         .catch(() => {});
     };
@@ -71,7 +71,7 @@ function SelfOrder() {
 
     try {
       const res = await axios.post(
-        'http://localhost:5000/api/self-order/order',
+        import.meta.env.VITE_API_URL + '/api/self-order/order',
         { items },
         { headers: { 'x-session-token': token } }
       );

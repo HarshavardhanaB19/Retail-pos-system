@@ -12,18 +12,18 @@ function Ingredients() {
   const [criticalAlerts, setCriticalAlerts] = useState([]);
 
   const loadIngredients = () => {
-    axios.get('http://localhost:5000/api/ingredients', { withCredentials: true })
+    axios.get(import.meta.env.VITE_API_URL + '/api/ingredients', { withCredentials: true })
       .then(res => setIngredients(res.data))
       .catch(() => setError('No access to ingredients management'));
   };
 
   useEffect(() => {
     loadIngredients();
-    axios.get('http://localhost:5000/api/branches/me', { withCredentials: true })
+    axios.get(import.meta.env.VITE_API_URL + '/api/branches/me', { withCredentials: true })
       .then(res => setBranch(res.data))
       .catch(() => {});
 
-    axios.get('http://localhost:5000/api/ingredients/critical-alerts', { withCredentials: true })
+    axios.get(import.meta.env.VITE_API_URL + '/api/ingredients/critical-alerts', { withCredentials: true })
       .then(res => setCriticalAlerts(res.data))
       .catch(() => {});
   }, []);
@@ -32,7 +32,7 @@ function Ingredients() {
     e.preventDefault();
     try {
       await axios.post(
-        'http://localhost:5000/api/ingredients',
+        import.meta.env.VITE_API_URL + '/api/ingredients',
         { name, quantity: Number(quantity), unit, isUtilityType: isUtility },
         { withCredentials: true }
       );
@@ -48,7 +48,7 @@ function Ingredients() {
     if (!addAmount) return;
     try {
       await axios.put(
-        `http://localhost:5000/api/ingredients/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/ingredients/${id}`,
         { quantity: currentQty + Number(addAmount) },
         { withCredentials: true }
       );

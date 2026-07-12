@@ -12,13 +12,13 @@ function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/products', { withCredentials: true })
+    axios.get(import.meta.env.VITE_API_URL + '/api/products', { withCredentials: true })
       .then(res => { setProducts(res.data); setIsLoading(false); })
       .catch(err => { setError('Could not load products. Are you logged in?'); setIsLoading(false); });
   }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/auth/me', { withCredentials: true })
+    axios.get(import.meta.env.VITE_API_URL + '/api/auth/me', { withCredentials: true })
       .then(res => setRole(res.data.user.role))
       .catch(() => setRole(''));
   }, []);
@@ -26,12 +26,12 @@ function Dashboard() {
   const sellOne = async (productId) => {
     try {
       await axios.post(
-        'http://localhost:5000/api/orders',
+        import.meta.env.VITE_API_URL + '/api/orders',
         { items: [{ productId, quantity: 1 }] },
         { withCredentials: true }
       );
       // refresh product list to show updated stock
-      const res = await axios.get('http://localhost:5000/api/products', { withCredentials: true });
+      const res = await axios.get(import.meta.env.VITE_API_URL + '/api/products', { withCredentials: true });
       setProducts(res.data);
     } catch (err) {
       alert(err.response?.data?.message || 'Sale failed');
@@ -50,12 +50,12 @@ function Dashboard() {
   const saveEdit = async (productId) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/products/${productId}`,
+        `${import.meta.env.VITE_API_URL}/api/products/${productId}`,
         { name: editName, price: Number(editPrice), stock: Number(editStock) },
         { withCredentials: true }
       );
       setEditingId(null);
-      const res = await axios.get('http://localhost:5000/api/products', { withCredentials: true });
+      const res = await axios.get(import.meta.env.VITE_API_URL + '/api/products', { withCredentials: true });
       setProducts(res.data);
     } catch (err) {
       alert('Failed to update (Admin/SuperAdmin only)');
@@ -65,8 +65,8 @@ function Dashboard() {
   const deleteProduct = async (productId) => {
     if (!window.confirm('Delete this product?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/products/${productId}`, { withCredentials: true });
-      const res = await axios.get('http://localhost:5000/api/products', { withCredentials: true });
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/products/${productId}`, { withCredentials: true });
+      const res = await axios.get(import.meta.env.VITE_API_URL + '/api/products', { withCredentials: true });
       setProducts(res.data);
     } catch (err) {
       alert('Failed to delete (Admin/SuperAdmin only)');
@@ -91,7 +91,7 @@ function Dashboard() {
 
       {(role === 'SUPER_ADMIN' || role === 'ADMIN') && (
         <AddProductForm onAdded={() => {
-          axios.get('http://localhost:5000/api/products', { withCredentials: true })
+          axios.get(import.meta.env.VITE_API_URL + '/api/products', { withCredentials: true })
             .then(res => setProducts(res.data));
         }} />
       )}
@@ -191,7 +191,7 @@ function AddProductForm({ onAdded }) {
     e.preventDefault();
     try {
       await axios.post(
-        'http://localhost:5000/api/products',
+        import.meta.env.VITE_API_URL + '/api/products',
         { name, price: Number(price), stock: Number(stock), reorderLevel: 5 },
         { withCredentials: true }
       );

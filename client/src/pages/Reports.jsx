@@ -12,19 +12,19 @@ function Reports() {
   const [wasteReason, setWasteReason] = useState('expired');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/reports/summary', { withCredentials: true })
+    axios.get(import.meta.env.VITE_API_URL + '/api/reports/summary', { withCredentials: true })
       .then(res => setSummary(res.data))
       .catch(() => setError('Could not load reports (Admin/SuperAdmin only)'));
 
-    axios.get('http://localhost:5000/api/reports/audit-log', { withCredentials: true })
+    axios.get(import.meta.env.VITE_API_URL + '/api/reports/audit-log', { withCredentials: true })
       .then(res => setAuditLog(res.data))
       .catch(() => {});
 
-    axios.get('http://localhost:5000/api/orders', { withCredentials: true })
+    axios.get(import.meta.env.VITE_API_URL + '/api/orders', { withCredentials: true })
       .then(res => setRecentOrders(res.data.slice(0, 5)))
       .catch(() => {});
 
-    axios.get('http://localhost:5000/api/waste', { withCredentials: true })
+    axios.get(import.meta.env.VITE_API_URL + '/api/waste', { withCredentials: true })
       .then(res => setWasteData(res.data))
       .catch(() => {});
   }, []);
@@ -39,7 +39,7 @@ function Reports() {
       method: 'cash'
     }));
     try {
-      await axios.post(`http://localhost:5000/api/orders/${orderId}/split`, { splits }, { withCredentials: true });
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/orders/${orderId}/split`, { splits }, { withCredentials: true });
       alert(`Split into ${numPeople} payments of ₹${perPerson} each`);
     } catch (err) {
       alert(err.response?.data?.message || 'Split failed');
@@ -50,12 +50,12 @@ function Reports() {
     e.preventDefault();
     try {
       await axios.post(
-        'http://localhost:5000/api/waste',
+        import.meta.env.VITE_API_URL + '/api/waste',
         { itemName: wasteName, quantity: Number(wasteQty), reason: wasteReason },
         { withCredentials: true }
       );
       setWasteName(''); setWasteQty('');
-      const res = await axios.get('http://localhost:5000/api/waste', { withCredentials: true });
+      const res = await axios.get(import.meta.env.VITE_API_URL + '/api/waste', { withCredentials: true });
       setWasteData(res.data);
     } catch (err) {
       alert('Failed to log waste');

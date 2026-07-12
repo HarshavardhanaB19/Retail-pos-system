@@ -10,7 +10,7 @@ function Users() {
   const [newRole, setNewRole] = useState('CASHIER');
 
   const loadUsers = () => {
-    axios.get('http://localhost:5000/api/auth/users', { withCredentials: true })
+    axios.get(import.meta.env.VITE_API_URL + '/api/auth/users', { withCredentials: true })
       .then(res => setUsers(res.data))
       .catch(() => setError('Admin/SuperAdmin only'));
   };
@@ -20,7 +20,7 @@ function Users() {
   const toggleAccess = async (userId, current) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/auth/users/${userId}/ingredients-access`,
+        `${import.meta.env.VITE_API_URL}/api/auth/users/${userId}/ingredients-access`,
         { hasIngredientsAccess: !current },
         { withCredentials: true }
       );
@@ -34,7 +34,7 @@ function Users() {
     e.preventDefault();
     try {
       await axios.post(
-        'http://localhost:5000/api/auth/users',
+        import.meta.env.VITE_API_URL + '/api/auth/users',
         { name: newName, email: newEmail, password: newPassword, role: newRole },
         { withCredentials: true }
       );
@@ -50,7 +50,7 @@ function Users() {
     if (!newPass) return;
     try {
       await axios.put(
-        `http://localhost:5000/api/auth/users/${userId}/reset-password`,
+        `${import.meta.env.VITE_API_URL}/api/auth/users/${userId}/reset-password`,
         { newPassword: newPass },
         { withCredentials: true }
       );

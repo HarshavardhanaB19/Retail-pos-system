@@ -17,7 +17,7 @@ const aggregatorRoutes = require('./routes/aggregator');
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173', 'https://harshavardhanab19.github.io'],
   credentials: true
 }));
 app.use(express.json());
