@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 function Layout({ children }) {
   const [role, setRole] = useState('');
   const [name, setName] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const path = window.location.pathname;
+  const location = useLocation();
+  const path = location.pathname;
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(import.meta.env.VITE_API_URL + '/api/auth/me', { withCredentials: true })
@@ -19,9 +22,9 @@ function Layout({ children }) {
   const handleLogout = async () => {
     try {
       await axios.post(import.meta.env.VITE_API_URL + '/api/auth/logout', {}, { withCredentials: true });
-      window.location.href = '/login';
+      navigate('/login');
     } catch (err) {
-      window.location.href = '/login';
+      navigate('/login');
     }
   };
 
@@ -112,11 +115,12 @@ function Layout({ children }) {
           {navItems.map(item => {
             const isActive = path === item.path || (item.path === '#' && false);
             return (
-              <a key={item.name} href={item.path} style={{
+              <Link key={item.name} to={item.path} style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '12px',
                 padding: '12px 16px',
+                textDecoration: 'none',
                 borderRadius: '8px',
                 color: isActive ? 'var(--primary)' : 'var(--text-muted)',
                 background: isActive ? 'rgba(59, 130, 246, 0.1)' : 'transparent',
@@ -126,7 +130,7 @@ function Layout({ children }) {
               }} onMouseOver={e => { if(!isActive) e.currentTarget.style.color = 'var(--text-main)'; }} onMouseOut={e => { if(!isActive) e.currentTarget.style.color = 'var(--text-muted)'; }}>
                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">{item.icon}</svg>
                 {item.name}
-              </a>
+              </Link>
             )
           })}
         </nav>
