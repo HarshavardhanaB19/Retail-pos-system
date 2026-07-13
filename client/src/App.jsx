@@ -9,6 +9,10 @@ import Users from './pages/Users';
 import BranchSettings from './pages/BranchSettings';
 import Categories from './pages/Categories';
 import POS from './pages/POS';
+import Suppliers from './pages/Suppliers';
+import Customers from './pages/Customers';
+import Inventory from './pages/Inventory';
+import AuditTrails from './pages/AuditTrails';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -24,6 +28,10 @@ function App() {
         <Route path="/pos" element={<ProtectedRoute><POS /></ProtectedRoute>} />
         <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
         <Route path="/branch-settings" element={<ProtectedRoute><BranchSettings /></ProtectedRoute>} />
+        <Route path="/suppliers" element={<ProtectedRoute><Suppliers /></ProtectedRoute>} />
+        <Route path="/customers" element={<ProtectedRoute><Customers /></ProtectedRoute>} />
+        <Route path="/inventory" element={<ProtectedRoute><Inventory /></ProtectedRoute>} />
+        <Route path="/audit-trails" element={<ProtectedRoute><AuditTrails /></ProtectedRoute>} />
         <Route path="/order/:branchId/:tableId" element={<SelfOrder />} />
         <Route path="/" element={<Login />} />
       </Routes>
