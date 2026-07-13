@@ -46,7 +46,11 @@ router.post('/login', async (req, res) => {
 
 // LOGOUT
 router.post('/logout', (req, res) => {
-  res.clearCookie('token');
+  res.clearCookie('token', {
+    httpOnly: true,
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    secure: process.env.NODE_ENV === 'production'
+  });
   res.json({ message: 'Logged out' });
 });
 // Test protected route
