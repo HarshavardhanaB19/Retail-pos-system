@@ -1,0 +1,16 @@
+{
+  "name": "pos-platform",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "start": "nx run-many --target=start --all",
+    "dev": "nx run-many --target=dev --all",
+    "test": "nx run-many --target=test --all"
+  },
+  "devDependencies": {
+    "nx": "^18.0.0"
+  }
+}
