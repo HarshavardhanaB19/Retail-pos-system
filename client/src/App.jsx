@@ -7,6 +7,8 @@ import Reports from './pages/Reports';
 import Ingredients from './pages/Ingredients';
 import Users from './pages/Users';
 import BranchSettings from './pages/BranchSettings';
+import Categories from './pages/Categories';
+import POS from './pages/POS';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
         <Route path="/queue" element={<ProtectedRoute><Queue /></ProtectedRoute>} />
         <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
         <Route path="/ingredients" element={<ProtectedRoute><Ingredients /></ProtectedRoute>} />
+        <Route path="/categories" element={<ProtectedRoute><Categories /></ProtectedRoute>} />
+        <Route path="/pos" element={<ProtectedRoute><POS /></ProtectedRoute>} />
         <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
         <Route path="/branch-settings" element={<ProtectedRoute><BranchSettings /></ProtectedRoute>} />
         <Route path="/order/:branchId/:tableId" element={<SelfOrder />} />
