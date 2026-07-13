@@ -10,7 +10,8 @@ const productSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   stock: { type: Number, required: true, default: 0 },
   reorderLevel: { type: Number, default: 5 },
-  branchId: { type: mongoose.Schema.Types.ObjectId, ref: 'Branch', required: true }
+  branchId: { type: mongoose.Schema.Types.ObjectId, ref: 'Branch', required: true },
+  category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Product', productSchema);

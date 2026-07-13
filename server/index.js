@@ -13,6 +13,7 @@ const ingredientRoutes = require('./routes/ingredients');
 const branchRoutes = require('./routes/branches');
 const wasteRoutes = require('./routes/waste');
 const aggregatorRoutes = require('./routes/aggregator');
+const categoryRoutes = require('./routes/categories');
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use('/api/ingredients', ingredientRoutes);
 app.use('/api/branches', branchRoutes);
 app.use('/api/waste', wasteRoutes);
 app.use('/api/aggregator', aggregatorRoutes);
+app.use('/api/categories', categoryRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Server is running' });
