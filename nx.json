@@ -3,7 +3,9 @@
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/dist"]// This is a test for the AI reviewer. 
+      "outputs": ["{projectRoot}/dist"]
+      This is a test for the AI reviewer. 
+      sum=0;
     },
     "dev": {
       "cache": false
